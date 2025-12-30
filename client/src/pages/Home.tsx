@@ -317,7 +317,8 @@ export default function Home() {
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: "auto" }}
                             exit={{ opacity: 0, height: 0 }}
-                            className="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-xl border border-dashed space-y-4"
+                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                            className="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-xl border border-dashed space-y-4 overflow-hidden"
                           >
                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {['hourlyWages', 'salariedWages', 'overtime', 'payrollTaxes', 'benefits', 'bonuses', 'pto'].map((key) => (
@@ -358,6 +359,7 @@ export default function Home() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
+                            transition={{ duration: 0.3, ease: "easeInOut" }}
                           >
                             <FormField
                               control={form.control}
