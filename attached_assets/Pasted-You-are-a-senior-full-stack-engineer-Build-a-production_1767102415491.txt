@@ -1,0 +1,91 @@
+You are a senior full-stack engineer. Build a production-ready, single-page “Restaurant Labor Cost Calculator” website.
+
+Tech stack:
+- Use Next.js (App Router) + TypeScript
+- Styling: Tailwind CSS
+- Deployed as a static-friendly site (works with Vercel)
+- Everything on ONE page route: / (no login, no database)
+
+Goal:
+A fast, mobile-friendly calculator that computes restaurant labor cost % and gives benchmarking guidance by restaurant type.
+
+Core inputs (UI):
+1) Time period selector: Weekly / Monthly / Yearly (default Monthly)
+2) Restaurant type selector: Quick Service / Casual Dining / Fine Dining
+3) Total Revenue for the period (number input, USD)
+4) Total Labor Cost for the period (number input, USD)
+   - Labor cost includes wages, salaries, overtime, payroll taxes, benefits, bonuses, PTO (show as tooltip or helper text)
+
+Optional “advanced inputs” accordion (collapsed by default):
+- Hourly wages total (USD)
+- Salaried wages total (USD)
+- Overtime total (USD)
+- Payroll taxes total (USD)
+- Benefits total (USD)
+- Bonuses total (USD)
+- PTO total (USD)
+
+Behavior:
+- If advanced inputs are used, auto-sum them into “Total Labor Cost” (and show the sum).
+- Allow user to either enter Total Labor Cost directly OR expand advanced and itemize. If itemized is used, Total Labor Cost field becomes read-only and displays the sum.
+- Real-time calculation after input changes.
+- Include a “Reset” button.
+- Include a “Share” feature that encodes inputs in the URL query params so users can copy/paste link and preserve state.
+
+Calculations:
+- Labor Cost % = (Total Labor Cost / Total Revenue) * 100
+- Handle divide-by-zero and invalid inputs gracefully.
+- Round displayed percent to 1 decimal (e.g., 29.7%).
+- Display currency with commas and $.
+
+Benchmark ranges (use these constants):
+- Quick Service: 20%–25%
+- Casual Dining: 25%–30%
+- Fine Dining: 30%–35%
+General guidance:
+- “Under 30% is often a healthy target, but varies by concept and location.”
+
+Outputs (results card):
+- Labor Cost % (big number)
+- Status badge based on selected restaurant type:
+  - “Below typical range” if below range
+  - “Within typical range” if in range
+  - “Above typical range” if above range
+- Show the typical range for the selected type
+- Show “What this means” bullets:
+  - If above range: suggest optimizing scheduling, cross-training, forecasting, prep efficiency (do NOT advise layoffs/cutting staff as the primary approach)
+  - If below range: note it may reflect efficiency, but also watch service quality and burnout
+  - If within range: reinforce and suggest monitoring by daypart and sales volume
+
+Extra mini-metrics (nice-to-have):
+- Labor dollars per $1,000 revenue
+- If period is weekly/monthly/yearly, show implied annualized revenue/labor cost for context (annualized = monthly*12, weekly*52, yearly*1)
+
+SEO + content requirements (same page):
+- Title tag: “Restaurant Labor Cost Calculator (Labor % & Benchmarks)”
+- H1: “Restaurant Labor Cost Calculator”
+- Intro paragraph (2–3 sentences) describing formula and what’s included.
+- Add an FAQ section (accordion) with 6–8 FAQs:
+  - What is restaurant labor cost percentage?
+  - What costs are included in labor cost?
+  - What is a good labor cost percentage?
+  - How often should I calculate labor cost?
+  - Why is my labor cost percentage high?
+  - How can I reduce labor cost without hurting service?
+- Implement JSON-LD structured data for FAQPage.
+
+UX requirements:
+- Clean, modern, minimal
+- Mobile-first
+- Form validation messages inline (don’t use alerts)
+- Accessible labels, keyboard navigation, and ARIA where needed
+
+Code requirements:
+- Provide complete code files.
+- Include a README with local run instructions.
+- No external paid APIs.
+- Keep dependencies minimal.
+
+Deliverables:
+- Next.js project code with the working calculator on the home page.
+- Provide clear comments explaining calculation logic and benchmark logic.
