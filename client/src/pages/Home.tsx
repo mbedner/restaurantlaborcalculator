@@ -311,84 +311,81 @@ export default function Home() {
                         />
                       </div>
 
-                      <AnimatePresence>
-                        {values.useDetailedLabor && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.25 }}
-                            className="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-xl border border-dashed space-y-4 overflow-hidden"
-                          >
-                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {['hourlyWages', 'salariedWages', 'overtime', 'payrollTaxes', 'benefits', 'bonuses', 'pto'].map((key) => (
-                                  <FormField
-                                    key={key}
-                                    control={form.control}
-                                    name={key as any}
-                                    render={({ field }) => (
-                                      <FormItem>
-                                        <FormLabel className="capitalize text-xs text-muted-foreground">
-                                          {key.replace(/([A-Z])/g, ' $1').trim()}
-                                        </FormLabel>
-                                        <FormControl>
-                                          <div className="relative">
-                                            <span className="absolute left-3 top-2.5 text-xs text-muted-foreground">$</span>
-                                            <Input 
-                                              type="number" 
-                                              className="pl-6 h-9 text-sm"
-                                              {...field}
-                                              onChange={e => field.onChange(parseFloat(e.target.value) || 0)}
-                                            />
-                                          </div>
-                                        </FormControl>
-                                      </FormItem>
-                                    )}
-                                  />
-                                ))}
-                             </div>
-                             <div className="pt-2 flex justify-between items-center border-t">
-                               <span className="font-semibold text-sm">Calculated Total</span>
-                               <span className="font-bold text-lg text-primary">
-                                 ${values.totalLaborCost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                               </span>
-                             </div>
-                          </motion.div>
-                        )}
-                        {!values.useDetailedLabor && (
-                          <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.25 }}
-                          >
-                            <FormField
-                              control={form.control}
-                              name="totalLaborCost"
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormControl>
-                                    <div className="relative">
-                                      <DollarSign className="absolute left-3 top-3.5 h-5 w-5 text-muted-foreground" />
-                                      <Input 
-                                        type="number" 
-                                        placeholder="0.00"
-                                        className="pl-10 h-12 text-lg font-medium rounded-xl"
-                                        {...field}
-                                        onChange={e => field.onChange(parseFloat(e.target.value) || 0)}
-                                      />
-                                    </div>
-                                  </FormControl>
-                                  <FormDescription>
-                                    Include salaries, wages, taxes, and benefits.
-                                  </FormDescription>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+                      {values.useDetailedLabor ? (
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-xl border border-dashed space-y-4"
+                        >
+                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              {['hourlyWages', 'salariedWages', 'overtime', 'payrollTaxes', 'benefits', 'bonuses', 'pto'].map((key) => (
+                                <FormField
+                                  key={key}
+                                  control={form.control}
+                                  name={key as any}
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <FormLabel className="capitalize text-xs text-muted-foreground">
+                                        {key.replace(/([A-Z])/g, ' $1').trim()}
+                                      </FormLabel>
+                                      <FormControl>
+                                        <div className="relative">
+                                          <span className="absolute left-3 top-2.5 text-xs text-muted-foreground">$</span>
+                                          <Input 
+                                            type="number" 
+                                            className="pl-6 h-9 text-sm"
+                                            {...field}
+                                            onChange={e => field.onChange(parseFloat(e.target.value) || 0)}
+                                          />
+                                        </div>
+                                      </FormControl>
+                                    </FormItem>
+                                  )}
+                                />
+                              ))}
+                           </div>
+                           <div className="pt-2 flex justify-between items-center border-t">
+                             <span className="font-semibold text-sm">Calculated Total</span>
+                             <span className="font-bold text-lg text-primary">
+                               ${values.totalLaborCost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                             </span>
+                           </div>
+                        </motion.div>
+                      ) : (
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <FormField
+                            control={form.control}
+                            name="totalLaborCost"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormControl>
+                                  <div className="relative">
+                                    <DollarSign className="absolute left-3 top-3.5 h-5 w-5 text-muted-foreground" />
+                                    <Input 
+                                      type="number" 
+                                      placeholder="0.00"
+                                      className="pl-10 h-12 text-lg font-medium rounded-xl"
+                                      {...field}
+                                      onChange={e => field.onChange(parseFloat(e.target.value) || 0)}
+                                    />
+                                  </div>
+                                </FormControl>
+                                <FormDescription>
+                                  Include salaries, wages, taxes, and benefits.
+                                </FormDescription>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </motion.div>
+                      )}
                     </div>
                   </form>
                 </Form>
