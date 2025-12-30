@@ -421,8 +421,7 @@ export default function Home() {
           {/* Right Column: Results */}
           <div className="lg:col-span-5 space-y-6">
             <div className="sticky top-24 space-y-6">
-              <AnimatePresence>
-                {showResults ? (
+              {showResults ? (
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -548,7 +547,6 @@ export default function Home() {
                     </p>
                   </motion.div>
                 )}
-              </AnimatePresence>
             </div>
           </div>
         </div>
