@@ -34,6 +34,14 @@ export function SchemaMarkup() {
 
   return (
     <Helmet>
+      <title>Restaurant Labor Cost Calculator (Labor % & Benchmarks)</title>
+      <meta name="description" content="Calculate your restaurant labor cost percentage instantly and compare it to typical benchmarks for quick service, casual dining, and fine dining. Includes wages, taxes, benefits, overtime, bonuses, and PTO." />
+      <meta property="og:type" content="website" />
+      <meta property="og:title" content="Restaurant Labor Cost Calculator (Labor % & Benchmarks)" />
+      <meta property="og:description" content="Calculate your restaurant labor cost percentage instantly and compare it to typical benchmarks by restaurant type." />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content="Restaurant Labor Cost Calculator (Labor % & Benchmarks)" />
+      <meta name="twitter:description" content="Calculate restaurant labor cost % and compare against benchmarks for quick service, casual dining, and fine dining." />
       <script type="application/ld+json">
         {JSON.stringify(faqData)}
       </script>
