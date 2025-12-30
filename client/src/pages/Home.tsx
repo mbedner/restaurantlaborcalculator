@@ -397,21 +397,51 @@ export default function Home() {
               <h3 className="text-xl font-display font-bold px-1">Common Questions</h3>
               <Accordion type="single" collapsible className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border px-4">
                 <AccordionItem value="item-1">
-                  <AccordionTrigger>What is a good labor cost percentage?</AccordionTrigger>
+                  <AccordionTrigger>What is restaurant labor cost percentage?</AccordionTrigger>
                   <AccordionContent className="text-muted-foreground">
-                    Generally, 20-35% is considered healthy. Fast food aims lower (25% or less), while fine dining often runs higher (30-35%) due to higher service standards.
+                    Restaurant labor cost percentage shows how much of your revenue goes toward labor expenses. It's calculated by dividing total labor cost by total revenue, then multiplying by 100.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-2">
-                  <AccordionTrigger>What should be included in labor cost?</AccordionTrigger>
+                  <AccordionTrigger>What costs are included in labor cost?</AccordionTrigger>
                   <AccordionContent className="text-muted-foreground">
-                    Everything related to employee compensation: hourly wages, salaries, overtime, payroll taxes, benefits, bonuses, vacation pay, and sick leave.
+                    Labor cost typically includes hourly wages, salaried pay, overtime, payroll taxes, employee benefits, bonuses, and paid time off. Any expense directly tied to staffing should be counted.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-3">
-                  <AccordionTrigger>How can I lower my labor cost?</AccordionTrigger>
+                  <AccordionTrigger>What is a good labor cost percentage for a restaurant?</AccordionTrigger>
                   <AccordionContent className="text-muted-foreground">
-                    Optimize scheduling based on sales forecasts, cross-train employees, reduce overtime, and improve retention to lower training costs.
+                    It depends on your restaurant type. Quick service restaurants often target 20–25%, casual dining 25–30%, and fine dining 30–35%. There's no single "perfect" number—context matters.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-4">
+                  <AccordionTrigger>How often should I calculate labor cost?</AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">
+                    Many operators track labor cost weekly for scheduling decisions and monthly for financial reporting. Regular monitoring helps catch issues early before they impact profitability.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-5">
+                  <AccordionTrigger>Why is my labor cost percentage high?</AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">
+                    High labor cost is often caused by mismatched scheduling, slow sales periods, inefficient workflows, or limited cross-training—not just overstaffing. Improving efficiency usually has more impact than cutting hours.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-6">
+                  <AccordionTrigger>How can I reduce labor cost without hurting service?</AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">
+                    Focus on smarter scheduling, better sales forecasting, cross-training staff, and operational efficiency. Reducing labor purely by cutting staff often leads to poor service and higher turnover.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-7">
+                  <AccordionTrigger>Does higher labor cost always mean my restaurant is unprofitable?</AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">
+                    No. Labor cost should be evaluated alongside revenue growth, guest experience, and staff retention. Some concepts require higher labor investment to deliver quality service.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-8">
+                  <AccordionTrigger>Is labor cost the same as payroll?</AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">
+                    Payroll is part of labor cost, but labor cost also includes taxes, benefits, bonuses, and paid time off. Payroll alone doesn't tell the full picture.
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>

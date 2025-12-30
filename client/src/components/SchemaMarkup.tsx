@@ -10,15 +10,15 @@ export function SchemaMarkup() {
         "name": "What is restaurant labor cost percentage?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Labor cost percentage is a metric that shows the portion of your gross sales that goes towards paying your employees. It is calculated by dividing total labor costs by total revenue and multiplying by 100."
+          "text": "Restaurant labor cost percentage shows how much of your revenue goes toward labor expenses. It's calculated by dividing total labor cost by total revenue, then multiplying by 100."
         }
       },
       {
         "@type": "Question",
-        "name": "What costs should be included in labor cost?",
+        "name": "What costs are included in labor cost?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Total labor cost should include hourly wages, salaried wages, overtime pay, payroll taxes, benefits (healthcare, insurance), bonuses, paid time off, and potentially employee meals."
+          "text": "Labor cost typically includes hourly wages, salaried pay, overtime, payroll taxes, employee benefits, bonuses, and paid time off. Any expense directly tied to staffing should be counted."
         }
       },
       {
@@ -26,7 +26,47 @@ export function SchemaMarkup() {
         "name": "What is a good labor cost percentage for a restaurant?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Generally, a healthy restaurant labor cost percentage falls between 25% and 35%. However, this varies by concept: Quick Service (20-25%), Casual Dining (25-30%), and Fine Dining (30-35%)."
+          "text": "It depends on your restaurant type. Quick service restaurants often target 20–25%, casual dining 25–30%, and fine dining 30–35%. There's no single \"perfect\" number—context matters."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How often should I calculate labor cost?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Many operators track labor cost weekly for scheduling decisions and monthly for financial reporting. Regular monitoring helps catch issues early before they impact profitability."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why is my labor cost percentage high?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "High labor cost is often caused by mismatched scheduling, slow sales periods, inefficient workflows, or limited cross-training—not just overstaffing. Improving efficiency usually has more impact than cutting hours."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How can I reduce labor cost without hurting service?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Focus on smarter scheduling, better sales forecasting, cross-training staff, and operational efficiency. Reducing labor purely by cutting staff often leads to poor service and higher turnover."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does higher labor cost always mean my restaurant is unprofitable?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Labor cost should be evaluated alongside revenue growth, guest experience, and staff retention. Some concepts require higher labor investment to deliver quality service."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is labor cost the same as payroll?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Payroll is part of labor cost, but labor cost also includes taxes, benefits, bonuses, and paid time off. Payroll alone doesn't tell the full picture."
         }
       }
     ]
