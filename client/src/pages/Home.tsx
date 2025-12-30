@@ -179,10 +179,10 @@ export default function Home() {
             </div>
             <div>
               <h1 className="text-xl font-bold font-display text-slate-900 dark:text-white leading-tight">
-                Labor Cost Calculator
+                Restaurant Labor Cost Calculator
               </h1>
               <p className="text-xs text-muted-foreground hidden sm:block">
-                For Modern Restaurants
+                Calculate, benchmark, and optimize your labor costs
               </p>
             </div>
           </div>
