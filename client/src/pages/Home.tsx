@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useLocation } from "wouter";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { 
   Calculator, 
@@ -57,14 +57,14 @@ export default function Home() {
       restaurantType: (params.get("restaurantType") as any) || "Casual Dining",
       revenue: params.get("revenue") ? Number(params.get("revenue")) : undefined,
       totalLaborCost: params.get("totalLaborCost") ? Number(params.get("totalLaborCost")) : undefined,
-      useDetailedLabor: params.get("useDetailedLabor") === "true",
-      hourlyWages: params.get("hourlyWages") ? Number(params.get("hourlyWages")) : undefined,
-      salariedWages: params.get("salariedWages") ? Number(params.get("salariedWages")) : undefined,
-      overtime: params.get("overtime") ? Number(params.get("overtime")) : undefined,
-      payrollTaxes: params.get("payrollTaxes") ? Number(params.get("payrollTaxes")) : undefined,
-      benefits: params.get("benefits") ? Number(params.get("benefits")) : undefined,
-      bonuses: params.get("bonuses") ? Number(params.get("bonuses")) : undefined,
-      pto: params.get("pto") ? Number(params.get("pto")) : undefined,
+      useDetailedLabor: params.get("useDetailedLabor") === "true" || false,
+      hourlyWages: params.get("hourlyWages") ? Number(params.get("hourlyWages")) : 0,
+      salariedWages: params.get("salariedWages") ? Number(params.get("salariedWages")) : 0,
+      overtime: params.get("overtime") ? Number(params.get("overtime")) : 0,
+      payrollTaxes: params.get("payrollTaxes") ? Number(params.get("payrollTaxes")) : 0,
+      benefits: params.get("benefits") ? Number(params.get("benefits")) : 0,
+      bonuses: params.get("bonuses") ? Number(params.get("bonuses")) : 0,
+      pto: params.get("pto") ? Number(params.get("pto")) : 0,
     };
   };
 
@@ -75,10 +75,11 @@ export default function Home() {
   });
 
   const values = useWatch({ control: form.control });
+  const useDetailedLabor = form.watch("useDetailedLabor") ?? false;
   
   // Real-time calculation of Detailed Labor
   useEffect(() => {
-    if (values.useDetailedLabor) {
+    if (useDetailedLabor) {
       const sum = 
         (Number(values.hourlyWages) || 0) +
         (Number(values.salariedWages) || 0) +
@@ -88,10 +89,10 @@ export default function Home() {
         (Number(values.bonuses) || 0) +
         (Number(values.pto) || 0);
       
-      form.setValue("totalLaborCost", sum, { shouldValidate: true });
+      form.setValue("totalLaborCost", sum, { shouldValidate: false });
     }
   }, [
-    values.useDetailedLabor, 
+    useDetailedLabor, 
     values.hourlyWages, 
     values.salariedWages, 
     values.overtime, 
@@ -114,7 +115,7 @@ export default function Home() {
     window.history.replaceState(null, '', newUrl);
 
     // Show results if we have basic data
-    if (values.revenue > 0 && values.totalLaborCost > 0) {
+    if (values.revenue > 0 && (Number(values.totalLaborCost) || 0) > 0) {
       setShowResults(true);
     } else {
       setShowResults(false);
@@ -122,7 +123,7 @@ export default function Home() {
   }, [values]);
 
   const laborPercentage = values.revenue > 0 
-    ? (values.totalLaborCost / values.revenue) * 100 
+    ? ((Number(values.totalLaborCost) || 0) / values.revenue) * 100 
     : 0;
 
   const currentBenchmark = BENCHMARKS[values.restaurantType as keyof typeof BENCHMARKS] || BENCHMARKS["Casual Dining"];
@@ -303,22 +304,28 @@ export default function Home() {
                             <div className="flex items-center space-x-2">
                               <span className="text-sm text-muted-foreground">Itemize Details</span>
                               <Switch
-                                checked={field.value}
-                                onCheckedChange={field.onChange}
+                                checked={!!field.value}
+                                onCheckedChange={(checked) => {
+                                  try {
+                                    field.onChange(checked);
+                                    // Initialize totalLaborCost to 0 when switching to detailed mode
+                                    if (checked) {
+                                      setTimeout(() => {
+                                        form.setValue("totalLaborCost", 0, { shouldValidate: false });
+                                      }, 0);
+                                    }
+                                  } catch (error) {
+                                    console.error("Error toggling detailed labor:", error);
+                                  }
+                                }}
                               />
                             </div>
                           )}
                         />
                       </div>
 
-                      {values.useDetailedLabor ? (
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          exit={{ opacity: 0 }}
-                          transition={{ duration: 0.2 }}
-                          className="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-xl border border-dashed space-y-4"
-                        >
+                      {useDetailedLabor ? (
+                        <div className="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-xl border border-dashed space-y-4">
                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                               {['hourlyWages', 'salariedWages', 'overtime', 'payrollTaxes', 'benefits', 'bonuses', 'pto'].map((key) => (
                                 <FormField
@@ -337,7 +344,11 @@ export default function Home() {
                                             type="number" 
                                             className="pl-6 h-9 text-sm"
                                             {...field}
-                                            onChange={e => field.onChange(parseFloat(e.target.value) || 0)}
+                                            value={field.value ?? ''}
+                                            onChange={e => {
+                                              const val = parseFloat(e.target.value) || 0;
+                                              field.onChange(val);
+                                            }}
                                           />
                                         </div>
                                       </FormControl>
@@ -349,41 +360,38 @@ export default function Home() {
                            <div className="pt-2 flex justify-between items-center border-t">
                              <span className="font-semibold text-sm">Calculated Total</span>
                              <span className="font-bold text-lg text-primary">
-                               ${values.totalLaborCost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                               ${(Number(values.totalLaborCost) || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                              </span>
                            </div>
-                        </motion.div>
+                        </div>
                       ) : (
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          exit={{ opacity: 0 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          <FormField
-                            control={form.control}
-                            name="totalLaborCost"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormControl>
-                                  <div className="relative">
-                                    <DollarSign className="absolute left-3 top-3.5 h-5 w-5 text-muted-foreground" />
-                                    <Input 
-                                      type="number" 
-                                      className="pl-10 h-12 text-lg font-medium rounded-xl"
-                                      {...field}
-                                      onChange={e => field.onChange(parseFloat(e.target.value) || 0)}
-                                    />
-                                  </div>
-                                </FormControl>
-                                <FormDescription>
-                                  Include salaries, wages, taxes, and benefits.
-                                </FormDescription>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </motion.div>
+                        <FormField
+                          control={form.control}
+                          name="totalLaborCost"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <div className="relative">
+                                  <DollarSign className="absolute left-3 top-3.5 h-5 w-5 text-muted-foreground" />
+                                  <Input 
+                                    type="number" 
+                                    className="pl-10 h-12 text-lg font-medium rounded-xl"
+                                    {...field}
+                                    value={field.value ?? ''}
+                                    onChange={e => {
+                                      const val = parseFloat(e.target.value) || 0;
+                                      field.onChange(val);
+                                    }}
+                                  />
+                                </div>
+                              </FormControl>
+                              <FormDescription>
+                                Include salaries, wages, taxes, and benefits.
+                              </FormDescription>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
                       )}
                     </div>
                   </form>
@@ -543,17 +551,17 @@ export default function Home() {
                           <div>
                             <p className="text-xs text-muted-foreground mb-1">Labor $ per $1k Rev</p>
                             <p className="text-lg font-bold font-display">
-                              ${((values.totalLaborCost / values.revenue) * 1000).toFixed(2)}
+                              ${values.revenue > 0 ? ((Number(values.totalLaborCost) || 0) / values.revenue * 1000).toFixed(2) : '0.00'}
                             </p>
                           </div>
                           <div>
                             <p className="text-xs text-muted-foreground mb-1">Annual Projection</p>
                             <p className="text-lg font-bold font-display text-primary">
                               ${(values.period === "Monthly" 
-                                ? values.totalLaborCost * 12 
+                                ? (Number(values.totalLaborCost) || 0) * 12 
                                 : values.period === "Weekly" 
-                                ? values.totalLaborCost * 52 
-                                : values.totalLaborCost).toLocaleString()}
+                                ? (Number(values.totalLaborCost) || 0) * 52 
+                                : (Number(values.totalLaborCost) || 0)).toLocaleString()}
                             </p>
                           </div>
                         </div>
