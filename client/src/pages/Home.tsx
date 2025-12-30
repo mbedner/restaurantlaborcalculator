@@ -115,15 +115,15 @@ export default function Home() {
     window.history.replaceState(null, '', newUrl);
 
     // Show results if we have basic data
-    if (values.revenue > 0 && (Number(values.totalLaborCost) || 0) > 0) {
+    if ((Number(values.revenue) || 0) > 0 && (Number(values.totalLaborCost) || 0) > 0) {
       setShowResults(true);
     } else {
       setShowResults(false);
     }
   }, [values]);
 
-  const laborPercentage = values.revenue > 0 
-    ? ((Number(values.totalLaborCost) || 0) / values.revenue) * 100 
+  const laborPercentage = (Number(values.revenue) || 0) > 0 
+    ? ((Number(values.totalLaborCost) || 0) / (Number(values.revenue) || 1)) * 100 
     : 0;
 
   const currentBenchmark = BENCHMARKS[values.restaurantType as keyof typeof BENCHMARKS] || BENCHMARKS["Casual Dining"];
@@ -315,7 +315,7 @@ export default function Home() {
                                     // Clear totalLaborCost when switching to detailed mode
                                     if (checked) {
                                       setTimeout(() => {
-                                        form.setValue("totalLaborCost", undefined, { shouldValidate: false });
+                                        form.setValue("totalLaborCost", 0, { shouldValidate: false });
                                       }, 0);
                                     }
                                   } catch (error) {
@@ -499,7 +499,7 @@ export default function Home() {
                           <div>
                             <p className="text-xs text-muted-foreground mb-1">Labor $ per $1k Rev</p>
                             <p className="text-lg font-bold font-display">
-                              ${values.revenue > 0 ? ((Number(values.totalLaborCost) || 0) / values.revenue * 1000).toFixed(2) : '0.00'}
+                              ${(Number(values.revenue) || 0) > 0 ? ((Number(values.totalLaborCost) || 0) / (Number(values.revenue) || 1) * 1000).toFixed(2) : '0.00'}
                             </p>
                           </div>
                           <div>
@@ -694,7 +694,7 @@ export default function Home() {
                           <div>
                             <p className="text-xs text-muted-foreground mb-1">Labor $ per $1k Rev</p>
                             <p className="text-lg font-bold font-display">
-                              ${values.revenue > 0 ? ((Number(values.totalLaborCost) || 0) / values.revenue * 1000).toFixed(2) : '0.00'}
+                              ${(Number(values.revenue) || 0) > 0 ? ((Number(values.totalLaborCost) || 0) / (Number(values.revenue) || 1) * 1000).toFixed(2) : '0.00'}
                             </p>
                           </div>
                           <div>
