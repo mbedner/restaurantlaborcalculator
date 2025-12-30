@@ -282,7 +282,6 @@ export default function Home() {
                               <DollarSign className="absolute left-3 top-3.5 h-5 w-5 text-muted-foreground" />
                               <Input 
                                 type="number" 
-                                placeholder="0.00" 
                                 className="pl-10 h-12 text-lg font-medium rounded-xl"
                                 {...field}
                                 onChange={e => field.onChange(parseFloat(e.target.value) || 0)} 
@@ -371,7 +370,6 @@ export default function Home() {
                                     <DollarSign className="absolute left-3 top-3.5 h-5 w-5 text-muted-foreground" />
                                     <Input 
                                       type="number" 
-                                      placeholder="0.00"
                                       className="pl-10 h-12 text-lg font-medium rounded-xl"
                                       {...field}
                                       onChange={e => field.onChange(parseFloat(e.target.value) || 0)}
