@@ -55,16 +55,16 @@ export default function Home() {
     return {
       period: (params.get("period") as any) || "Monthly",
       restaurantType: (params.get("restaurantType") as any) || "Casual Dining",
-      revenue: Number(params.get("revenue")) || 0,
-      totalLaborCost: Number(params.get("totalLaborCost")) || 0,
+      revenue: params.get("revenue") ? Number(params.get("revenue")) : undefined,
+      totalLaborCost: params.get("totalLaborCost") ? Number(params.get("totalLaborCost")) : undefined,
       useDetailedLabor: params.get("useDetailedLabor") === "true",
-      hourlyWages: Number(params.get("hourlyWages")) || 0,
-      salariedWages: Number(params.get("salariedWages")) || 0,
-      overtime: Number(params.get("overtime")) || 0,
-      payrollTaxes: Number(params.get("payrollTaxes")) || 0,
-      benefits: Number(params.get("benefits")) || 0,
-      bonuses: Number(params.get("bonuses")) || 0,
-      pto: Number(params.get("pto")) || 0,
+      hourlyWages: params.get("hourlyWages") ? Number(params.get("hourlyWages")) : undefined,
+      salariedWages: params.get("salariedWages") ? Number(params.get("salariedWages")) : undefined,
+      overtime: params.get("overtime") ? Number(params.get("overtime")) : undefined,
+      payrollTaxes: params.get("payrollTaxes") ? Number(params.get("payrollTaxes")) : undefined,
+      benefits: params.get("benefits") ? Number(params.get("benefits")) : undefined,
+      bonuses: params.get("bonuses") ? Number(params.get("bonuses")) : undefined,
+      pto: params.get("pto") ? Number(params.get("pto")) : undefined,
     };
   };
 
