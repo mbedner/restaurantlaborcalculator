@@ -444,7 +444,7 @@ export default function Home() {
                 </AccordionItem>
                 <AccordionItem value="item-7">
                   <AccordionTrigger>Does higher labor cost always mean my restaurant is unprofitable?</AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground">
+                  <AccordionContent className="text-muted-foreground text-left">
                     No. Labor cost should be evaluated alongside revenue growth, guest experience, and staff retention. Some concepts require higher labor investment to deliver quality service.
                   </AccordionContent>
                 </AccordionItem>
