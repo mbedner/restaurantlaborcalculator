@@ -8,28 +8,28 @@
   --font-body: 'Inter', sans-serif;
   --font-display: 'Outfit', sans-serif;
 
-  /* Modern Professional Financial Palette - Blue/Slate/Green base */
+  /* Modern Professional Financial Palette - Green base */
   --background: 210 40% 98%;
   --foreground: 222 47% 11%;
   
   --card: 210 40% 100%;
   --card-foreground: 222 47% 11%;
-  --card-border: 214 32% 91%;
+  --card-border: 142 25% 88%;
   
   --popover: 210 40% 100%;
   --popover-foreground: 222 47% 11%;
-  --popover-border: 214 32% 91%;
+  --popover-border: 142 25% 88%;
   
-  --primary: 221 83% 53%;
+  --primary: 142 72% 45%;
   --primary-foreground: 210 40% 98%;
   
-  --secondary: 210 40% 96%;
-  --secondary-foreground: 222 47% 11%;
+  --secondary: 142 30% 92%;
+  --secondary-foreground: 142 20% 25%;
   
-  --muted: 214 32% 91%;
-  --muted-foreground: 215 16% 47%;
+  --muted: 142 20% 88%;
+  --muted-foreground: 142 15% 45%;
   
-  --accent: 262 83% 58%;
+  --accent: 160 70% 45%;
   --accent-foreground: 210 40% 98%;
   
   --destructive: 0 84% 60%;
@@ -42,9 +42,9 @@
   --warning: 38 92% 50%;
   --warning-foreground: 48 96% 89%;
 
-  --border: 214 32% 91%;
-  --input: 214 32% 91%;
-  --ring: 221 83% 53%;
+  --border: 142 25% 88%;
+  --input: 142 25% 88%;
+  --ring: 142 72% 45%;
   
   --radius: 0.75rem;
 }
@@ -53,32 +53,32 @@
   --background: 222 47% 11%;
   --foreground: 210 40% 98%;
   
-  --card: 217 19% 27%;
+  --card: 142 20% 22%;
   --card-foreground: 210 40% 98%;
-  --card-border: 217 19% 27%;
+  --card-border: 142 20% 22%;
   
-  --popover: 217 19% 27%;
+  --popover: 142 20% 22%;
   --popover-foreground: 210 40% 98%;
-  --popover-border: 217 19% 27%;
+  --popover-border: 142 20% 22%;
   
-  --primary: 217 91% 60%;
-  --primary-foreground: 222 47% 11%;
+  --primary: 142 75% 55%;
+  --primary-foreground: 142 20% 15%;
   
-  --secondary: 217 19% 27%;
+  --secondary: 142 20% 28%;
   --secondary-foreground: 210 40% 98%;
   
-  --muted: 217 19% 27%;
-  --muted-foreground: 215 20% 65%;
+  --muted: 142 15% 28%;
+  --muted-foreground: 142 15% 65%;
   
-  --accent: 262 83% 58%;
-  --accent-foreground: 210 40% 98%;
+  --accent: 160 70% 55%;
+  --accent-foreground: 142 20% 15%;
   
   --destructive: 0 62% 30%;
   --destructive-foreground: 210 40% 98%;
   
-  --border: 217 19% 27%;
-  --input: 217 19% 27%;
-  --ring: 224 76% 48%;
+  --border: 142 20% 28%;
+  --input: 142 20% 28%;
+  --ring: 142 75% 55%;
 }
 
 @layer base {
