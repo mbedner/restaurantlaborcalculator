@@ -311,13 +311,13 @@ export default function Home() {
                         />
                       </div>
 
-                      <AnimatePresence mode="wait">
-                        {values.useDetailedLabor ? (
+                      <AnimatePresence>
+                        {values.useDetailedLabor && (
                           <motion.div
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: "auto" }}
                             exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                            transition={{ duration: 0.25 }}
                             className="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-xl border border-dashed space-y-4 overflow-hidden"
                           >
                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -354,12 +354,13 @@ export default function Home() {
                                </span>
                              </div>
                           </motion.div>
-                        ) : (
+                        )}
+                        {!values.useDetailedLabor && (
                           <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                            transition={{ duration: 0.25 }}
                           >
                             <FormField
                               control={form.control}
