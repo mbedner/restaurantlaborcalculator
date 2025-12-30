@@ -12,6 +12,14 @@
   --background: 210 40% 98%;
   --foreground: 222 47% 11%;
   
+  --card: 210 40% 100%;
+  --card-foreground: 222 47% 11%;
+  --card-border: 214 32% 91%;
+  
+  --popover: 210 40% 100%;
+  --popover-foreground: 222 47% 11%;
+  --popover-border: 214 32% 91%;
+  
   --primary: 221 83% 53%;
   --primary-foreground: 210 40% 98%;
   
@@ -44,6 +52,14 @@
 .dark {
   --background: 222 47% 11%;
   --foreground: 210 40% 98%;
+  
+  --card: 217 19% 27%;
+  --card-foreground: 210 40% 98%;
+  --card-border: 217 19% 27%;
+  
+  --popover: 217 19% 27%;
+  --popover-foreground: 210 40% 98%;
+  --popover-border: 217 19% 27%;
   
   --primary: 217 91% 60%;
   --primary-foreground: 222 47% 11%;
