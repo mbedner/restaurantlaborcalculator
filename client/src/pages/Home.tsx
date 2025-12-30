@@ -204,7 +204,7 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
           
           {/* Left Column: Input Form */}
-          <div className="lg:col-span-7 space-y-6">
+          <div className="lg:col-span-7 space-y-6 order-2 lg:order-1">
             <Card className="border-none shadow-xl shadow-slate-200/50 dark:shadow-black/20 overflow-hidden">
               <div className="h-1 bg-gradient-to-r from-primary to-accent" />
               <CardHeader>
@@ -403,6 +403,145 @@ export default function Home() {
               </CardContent>
             </Card>
 
+            {/* Results Section - appears here on mobile, positioned on right on desktop */}
+            <div className="lg:hidden space-y-6">
+              {showResults ? (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="space-y-6"
+                  >
+                    <Card className="border-none shadow-2xl shadow-primary/10 dark:shadow-none overflow-hidden bg-slate-900 text-white relative">
+                      <div className="absolute top-0 right-0 p-32 bg-primary/20 blur-3xl rounded-full transform translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+                      
+                      <CardHeader className="relative z-10 pb-2">
+                        <CardTitle className="text-slate-100 font-medium opacity-80">Labor Cost Percentage</CardTitle>
+                      </CardHeader>
+                      <CardContent className="relative z-10">
+                        <div className="flex items-baseline gap-2">
+                          <span className="text-6xl font-bold font-display tracking-tight">
+                            {laborPercentage.toFixed(1)}%
+                          </span>
+                          <span className="text-sm font-medium opacity-60">of revenue</span>
+                        </div>
+
+                        <div className="mt-6 flex flex-wrap gap-2">
+                           <ResultBadge 
+                             status={status === "neutral" ? "success" : status as any} 
+                             label={
+                               status === "success" ? "Within Range" :
+                               status === "warning" ? "Below Standard" :
+                               status === "destructive" ? "Above Standard" : "Enter Data"
+                             }
+                             className="border-none bg-white/10 text-white backdrop-blur-sm"
+                           />
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    <Card className="border-none shadow-lg">
+                      <CardHeader>
+                        <CardTitle className="text-lg flex items-center gap-2">
+                          <TrendingUp className="w-5 h-5 text-primary" />
+                          Analysis
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-6">
+                        <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900 border space-y-2">
+                          <div className="flex justify-between text-sm">
+                            <span className="text-muted-foreground">Your {values.restaurantType} Target:</span>
+                            <span className="font-semibold">{currentBenchmark.min}% - {currentBenchmark.max}%</span>
+                          </div>
+                          <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
+                            <motion.div 
+                              className={cn("h-full rounded-full", 
+                                status === "success" ? "bg-green-500" :
+                                status === "warning" ? "bg-amber-500" : "bg-red-500"
+                              )}
+                              initial={{ width: 0 }}
+                              animate={{ width: `${Math.min(laborPercentage, 100)}%` }}
+                              transition={{ duration: 1, ease: "easeOut" }}
+                            />
+                          </div>
+                          <div className="flex justify-between text-xs text-muted-foreground pt-1">
+                            <span>0%</span>
+                            <span>Target: {((currentBenchmark.min + currentBenchmark.max)/2).toFixed(0)}%</span>
+                            <span>100%</span>
+                          </div>
+                        </div>
+
+                        <div className="space-y-3">
+                          <h4 className="font-semibold text-sm">Insights</h4>
+                          {status === "success" && (
+                            <div className="flex gap-3 items-start p-3 bg-green-50 dark:bg-green-900/10 rounded-lg text-sm text-green-800 dark:text-green-300">
+                              <ResultBadge status="success" label="Healthy" className="mt-0.5 px-2 py-0.5 h-auto text-[10px]" />
+                              <p>You are managing labor efficiently for a {values.restaurantType} establishment. Maintain this balance.</p>
+                            </div>
+                          )}
+                          {status === "warning" && (
+                            <div className="flex gap-3 items-start p-3 bg-amber-50 dark:bg-amber-900/10 rounded-lg text-sm text-amber-800 dark:text-amber-300">
+                              <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                              <p>Your labor cost is unusually low. Ensure you aren't understaffing, which can hurt service quality and burn out staff.</p>
+                            </div>
+                          )}
+                          {status === "destructive" && (
+                            <div className="flex gap-3 items-start p-3 bg-red-50 dark:bg-red-900/10 rounded-lg text-sm text-red-800 dark:text-red-300">
+                              <TrendingDown className="w-4 h-4 shrink-0 mt-0.5" />
+                              <p>Costs are high. Consider reviewing staff schedules during slow periods, auditing overtime, or cross-training employees.</p>
+                            </div>
+                          )}
+                        </div>
+
+                        <Separator />
+
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <p className="text-xs text-muted-foreground mb-1">Labor $ per $1k Rev</p>
+                            <p className="text-lg font-bold font-display">
+                              ${values.revenue > 0 ? ((Number(values.totalLaborCost) || 0) / values.revenue * 1000).toFixed(2) : '0.00'}
+                            </p>
+                          </div>
+                          <div>
+                            <p className="text-xs text-muted-foreground mb-1">Annual Projection</p>
+                            <p className="text-lg font-bold font-display text-primary">
+                              ${(values.period === "Monthly" 
+                                ? (Number(values.totalLaborCost) || 0) * 12 
+                                : values.period === "Weekly" 
+                                ? (Number(values.totalLaborCost) || 0) * 52 
+                                : (Number(values.totalLaborCost) || 0)).toLocaleString()}
+                            </p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="flex flex-col items-center justify-center h-64 p-8 bg-white dark:bg-slate-900 rounded-2xl border border-dashed text-center"
+                  >
+                    <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mb-4">
+                      <Calculator className="w-8 h-8 text-muted-foreground" />
+                    </div>
+                    <h3 className="font-semibold text-lg">No Data Yet</h3>
+                    <p className="text-sm text-muted-foreground mt-2 max-w-[200px]">
+                      Enter your revenue and labor costs to see the analysis.
+                    </p>
+                  </motion.div>
+                )}
+            </div>
+
+            <section className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border p-6 space-y-3">
+              <h2 className="text-xl font-display font-bold">How Restaurant Labor Cost Is Calculated</h2>
+              <p className="text-muted-foreground">
+                Restaurant labor cost percentage is calculated by dividing total labor costs
+                by total revenue, then multiplying by 100. Labor costs include wages,
+                salaries, payroll taxes, benefits, bonuses, and paid time off.
+              </p>
+            </section>
+
             <div className="space-y-4">
               <h3 className="text-xl font-display font-bold px-1">Common Questions</h3>
               <Accordion type="single" collapsible className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border px-4">
@@ -458,8 +597,8 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Right Column: Results */}
-          <div className="lg:col-span-5 space-y-6">
+          {/* Right Column: Results - Desktop only */}
+          <div className="hidden lg:block lg:col-span-5 space-y-6 order-1 lg:order-2">
             <div className="sticky top-24 space-y-6">
               {showResults ? (
                   <motion.div
