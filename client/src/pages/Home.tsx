@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useLocation } from "wouter";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 import { 
   Calculator, 
   RefreshCcw, 
