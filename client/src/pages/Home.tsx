@@ -58,13 +58,13 @@ export default function Home() {
       revenue: params.get("revenue") ? Number(params.get("revenue")) : undefined,
       totalLaborCost: params.get("totalLaborCost") ? Number(params.get("totalLaborCost")) : undefined,
       useDetailedLabor: params.get("useDetailedLabor") === "true" || false,
-      hourlyWages: params.get("hourlyWages") ? Number(params.get("hourlyWages")) : 0,
-      salariedWages: params.get("salariedWages") ? Number(params.get("salariedWages")) : 0,
-      overtime: params.get("overtime") ? Number(params.get("overtime")) : 0,
-      payrollTaxes: params.get("payrollTaxes") ? Number(params.get("payrollTaxes")) : 0,
-      benefits: params.get("benefits") ? Number(params.get("benefits")) : 0,
-      bonuses: params.get("bonuses") ? Number(params.get("bonuses")) : 0,
-      pto: params.get("pto") ? Number(params.get("pto")) : 0,
+      hourlyWages: params.get("hourlyWages") ? Number(params.get("hourlyWages")) : undefined,
+      salariedWages: params.get("salariedWages") ? Number(params.get("salariedWages")) : undefined,
+      overtime: params.get("overtime") ? Number(params.get("overtime")) : undefined,
+      payrollTaxes: params.get("payrollTaxes") ? Number(params.get("payrollTaxes")) : undefined,
+      benefits: params.get("benefits") ? Number(params.get("benefits")) : undefined,
+      bonuses: params.get("bonuses") ? Number(params.get("bonuses")) : undefined,
+      pto: params.get("pto") ? Number(params.get("pto")) : undefined,
     };
   };
 
@@ -149,16 +149,16 @@ export default function Home() {
     form.reset({
       period: "Monthly",
       restaurantType: "Casual Dining",
-      revenue: 0,
-      totalLaborCost: 0,
+      revenue: undefined,
+      totalLaborCost: undefined,
       useDetailedLabor: false,
-      hourlyWages: 0,
-      salariedWages: 0,
-      overtime: 0,
-      payrollTaxes: 0,
-      benefits: 0,
-      bonuses: 0,
-      pto: 0,
+      hourlyWages: undefined,
+      salariedWages: undefined,
+      overtime: undefined,
+      payrollTaxes: undefined,
+      benefits: undefined,
+      bonuses: undefined,
+      pto: undefined,
     });
     setShowResults(false);
     toast({
@@ -285,7 +285,11 @@ export default function Home() {
                                 type="number" 
                                 className="pl-10 h-12 text-lg font-medium rounded-xl"
                                 {...field}
-                                onChange={e => field.onChange(parseFloat(e.target.value) || 0)} 
+                                value={field.value ?? ''}
+                                onChange={e => {
+                                  const val = e.target.value === '' ? undefined : parseFloat(e.target.value);
+                                  field.onChange(isNaN(val as number) ? undefined : val);
+                                }}
                               />
                             </div>
                           </FormControl>
@@ -308,10 +312,10 @@ export default function Home() {
                                 onCheckedChange={(checked) => {
                                   try {
                                     field.onChange(checked);
-                                    // Initialize totalLaborCost to 0 when switching to detailed mode
+                                    // Clear totalLaborCost when switching to detailed mode
                                     if (checked) {
                                       setTimeout(() => {
-                                        form.setValue("totalLaborCost", 0, { shouldValidate: false });
+                                        form.setValue("totalLaborCost", undefined, { shouldValidate: false });
                                       }, 0);
                                     }
                                   } catch (error) {
@@ -346,8 +350,8 @@ export default function Home() {
                                             {...field}
                                             value={field.value ?? ''}
                                             onChange={e => {
-                                              const val = parseFloat(e.target.value) || 0;
-                                              field.onChange(val);
+                                              const val = e.target.value === '' ? undefined : parseFloat(e.target.value);
+                                              field.onChange(isNaN(val as number) ? undefined : val);
                                             }}
                                           />
                                         </div>
@@ -379,8 +383,8 @@ export default function Home() {
                                     {...field}
                                     value={field.value ?? ''}
                                     onChange={e => {
-                                      const val = parseFloat(e.target.value) || 0;
-                                      field.onChange(val);
+                                      const val = e.target.value === '' ? undefined : parseFloat(e.target.value);
+                                      field.onChange(isNaN(val as number) ? undefined : val);
                                     }}
                                   />
                                 </div>
